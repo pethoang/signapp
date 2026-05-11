@@ -1,48 +1,240 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Sign Exam Question Generator</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
-    <script>
-      tailwind.config = {
-        theme: {
-          extend: {
-            fontFamily: {
-              sans: ['Roboto', 'sans-serif'],
-            },
-          }
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sign Exam Question Generator</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Roboto', 'sans-serif'],
+          },
         }
       }
-    </script>
-    <style>
-      html {
-        font-size: 17px; /* Increase base size slightly */
-      }
-      body {
-        font-family: 'Roboto', sans-serif;
-        background-color: #f3f4f6;
-      }
-    </style>
-    <script>
-      window.process = { env: {} };
-    </script>
-  <script type="importmap">
-{
-  "imports": {
-    "react/": "https://esm.sh/react@^19.2.4/",
-    "react": "https://esm.sh/react@^19.2.4",
-    "@google/genai": "https://esm.sh/@google/genai@^1.39.0",
-    "react-dom/": "https://esm.sh/react-dom@^19.2.4/"
-  }
-}
-</script>
-<link rel="stylesheet" href="/index.css">
+    }
+  </script>
+  <style>
+    html { font-size: 17px; }
+    body { font-family: 'Roboto', sans-serif; background-color: #f3f4f6; }
+    .hidden { display: none !important; }
+    .fade-in { animation: fadeIn 0.3s ease-in-out; }
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+  </style>
 </head>
-  <body>
-    <div id="root"></div>
-    <script type="module" src="/index.tsx"></script>
-  </body>
+<body class="min-h-screen flex flex-col bg-gray-50 text-gray-800 font-sans">
+  
+  <header class="bg-[#ff4500] text-white shadow-lg z-10">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 py-4 sm:py-5 flex flex-col sm:flex-row justify-between items-center gap-4 sm:gap-0">
+      <div class="text-center sm:text-left">
+         <h1 class="text-xl sm:text-2xl font-bold tracking-tight">Sign Exam Generator</h1>
+         <p class="text-[#ffe0cc] text-xs font-medium uppercase tracking-wider mt-1">Professional Exam Content Tool</p>
+      </div>
+      <div class="flex flex-col items-center sm:items-end gap-2">
+        <div>
+          <input type="password" id="apiKeyInput" placeholder="Gemini API Key" class="px-2 py-1 rounded text-black text-sm w-48 shadow-inner" />
+        </div>
+        <div class="flex flex-col items-center sm:items-end">
+          <span class="text-white/80 text-xs sm:text-sm italic">Powering Education with AI</span>
+          <span class="text-white font-bold text-sm mt-1">Zalo 0913.885.221 (Ông Giáo)</span>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="flex-grow max-w-5xl w-full mx-auto px-4 sm:px-6 py-6 sm:py-10 space-y-6 sm:space-y-8">
+    <div class="bg-white border border-gray-200 shadow-sm rounded-xl p-6 sm:p-8 mb-4">
+       <h2 class="text-xl font-bold text-gray-800 mb-6 flex items-center gap-2">
+         <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-[#ff4500]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+         </svg>
+         How it Works
+       </h2>
+       <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+          <div class="flex flex-col items-center text-center relative">
+             <div class="w-14 h-14 rounded-full bg-[#fff5f0] text-[#ff4500] flex items-center justify-center mb-4 shadow-sm border border-[#ffe0cc]">1</div>
+             <h4 class="font-bold text-gray-900 mb-1">1. Select Level</h4>
+             <p class="text-sm text-gray-500">Choose A2 or B1 to set the difficulty.</p>
+             <div class="hidden md:block absolute top-7 -right-4 w-8 border-t-2 border-dashed border-gray-200"></div>
+          </div>
+          <div class="flex flex-col items-center text-center relative">
+             <div class="w-14 h-14 rounded-full bg-[#fff5f0] text-[#ff4500] flex items-center justify-center mb-4 shadow-sm border border-[#ffe0cc]">2</div>
+             <h4 class="font-bold text-gray-900 mb-1">2. Input Data</h4>
+             <p class="text-sm text-gray-500">Type a question or upload a reference image.</p>
+             <div class="hidden md:block absolute top-7 -right-4 w-8 border-t-2 border-dashed border-gray-200"></div>
+          </div>
+          <div class="flex flex-col items-center text-center relative">
+             <div class="w-14 h-14 rounded-full bg-[#fff5f0] text-[#ff4500] flex items-center justify-center mb-4 shadow-sm border border-[#ffe0cc]">3</div>
+             <h4 class="font-bold text-gray-900 mb-1">3. Generate</h4>
+             <p class="text-sm text-gray-500">AI analyzes and generates content.</p>
+             <div class="hidden md:block absolute top-7 -right-4 w-8 border-t-2 border-dashed border-gray-200"></div>
+          </div>
+          <div class="flex flex-col items-center text-center">
+             <div class="w-14 h-14 rounded-full bg-[#fff5f0] text-[#ff4500] flex items-center justify-center mb-4 shadow-sm border border-[#ffe0cc]">4</div>
+             <h4 class="font-bold text-gray-900 mb-1">4. Download</h4>
+             <p class="text-sm text-gray-500">Get your exam questions in DOCX.</p>
+          </div>
+       </div>
+    </div>
+
+    <div class="bg-[#fff5f0] border border-gray-200 shadow-sm rounded-xl p-6 flex flex-col sm:flex-row sm:items-center justify-between gap-6 transition hover:shadow-md">
+       <div>
+         <h3 class="text-lg font-bold text-gray-800 flex items-center gap-2">Target Audience Level</h3>
+         <p class="text-sm text-gray-500 mt-1">Select the CEFR proficiency level for generated questions.</p>
+       </div>
+       <div class="flex bg-gray-100 p-1 rounded-lg">
+          <button id="levelA2Btn" class="px-5 py-2.5 rounded-md text-sm font-semibold transition-all duration-200 bg-white text-[#ff4500] shadow-sm ring-1 ring-gray-200">A2 (Elementary)</button>
+          <button id="levelB1Btn" class="px-5 py-2.5 rounded-md text-sm font-semibold transition-all duration-200 text-gray-500 hover:text-gray-700">B1 (Intermediate)</button>
+       </div>
+    </div>
+
+    <div class="bg-white rounded-xl shadow-lg border border-gray-100 overflow-hidden">
+      <div class="flex border-b border-gray-100">
+        <button id="tabManual" class="flex-1 py-4 text-sm transition-all duration-200 border-b-2 border-[#ff4500] text-[#cf3700] bg-[#ffe0cc] font-bold shadow-[inset_0_-2px_4px_rgba(0,0,0,0.05)]">Manual Input</button>
+        <button id="tabUpload" class="flex-1 py-4 text-sm transition-all duration-200 border-b-2 border-transparent text-gray-500 hover:text-gray-700 hover:bg-gray-50 font-medium">Upload Reference Image</button>
+      </div>
+
+      <div class="p-4 sm:p-8">
+        
+        <div id="manualTabContent" class="fade-in">
+          <label for="questionInput" class="block text-sm font-semibold text-gray-700 mb-2">Input Question Text</label>
+          <textarea id="questionInput" class="w-full h-40 p-4 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#ff4500] focus:border-[#ff4500] outline-none transition text-base resize-none bg-gray-50 focus:bg-white" placeholder="e.g., [NO ENTRY] You cannot enter this road. A. True B. False..."></textarea>
+          <div class="mt-6 flex justify-end">
+            <button id="manualGenerateBtn" class="w-full sm:w-auto px-8 py-3 rounded-lg text-white font-bold tracking-wide shadow-md transition-transform active:scale-95 bg-[#ff4500] hover:bg-[#e03e00] hover:shadow-lg">Generate Content</button>
+          </div>
+        </div>
+
+        <div id="uploadTabContent" class="fade-in hidden space-y-6">
+          <div class="border-2 border-dashed border-gray-300 rounded-lg p-6 sm:p-8 text-center hover:border-[#ff4500] hover:bg-[#fff5f0] transition-colors cursor-pointer relative group">
+            <input type="file" id="fileInput" accept="image/*" class="absolute inset-0 w-full h-full opacity-0 cursor-pointer" />
+            <div class="pointer-events-none">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 mx-auto text-gray-400 group-hover:text-[#ff4500] transition-colors mb-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                </svg>
+                <p class="text-gray-600 font-medium group-hover:text-[#ff4500]">Click to upload or drag and drop</p>
+                <p class="text-xs text-gray-400 mt-2">JPG, PNG (Max 5MB)</p>
+            </div>
+          </div>
+
+          <div id="referenceImagePreview" class="hidden flex items-center gap-4 bg-gray-50 p-4 rounded-lg border border-gray-200">
+            <img id="refImgSrc" src="" alt="Reference" class="w-16 h-16 object-cover rounded border border-gray-300" />
+            <div>
+              <p class="text-sm font-semibold text-gray-800">Reference Image Loaded</p>
+              <p class="text-xs text-gray-500">Ready for analysis</p>
+            </div>
+          </div>
+
+          <div id="analyzingRefLoader" class="hidden py-10 text-center text-gray-500">
+            <div class="inline-block w-8 h-8 border-4 border-[#ff4500] border-t-transparent rounded-full animate-spin mb-3"></div>
+            <p class="font-medium">Analyzing image structure...</p>
+          </div>
+
+          <div id="suggestionsContainer" class="hidden bg-gray-50 rounded-lg p-6 border border-gray-200 mt-6">
+            <div class="flex justify-between items-center mb-4">
+              <h3 class="text-lg font-bold text-gray-800">Suggested Questions</h3>
+              <button id="selectAllBtn" class="text-sm text-[#ff4500] hover:text-[#e03e00] font-semibold">Select All</button>
+            </div>
+            
+            <div id="suggestionsList" class="space-y-3"></div>
+
+            <div class="mt-8 flex justify-end">
+              <button id="batchGenerateBtn" disabled class="w-full sm:w-auto px-8 py-3 rounded-lg text-white font-bold shadow-md transition-all bg-gray-400 cursor-not-allowed">
+                Generate Selected Questions
+              </button>
+            </div>
+          </div>
+
+          <div id="batchProcessingLoader" class="hidden py-12 text-center bg-gray-50 rounded-xl border border-dashed border-gray-300">
+            <div class="inline-block animate-spin rounded-full h-10 w-10 border-4 border-[#ff4500] border-t-transparent mb-4"></div>
+            <p class="text-xl font-bold text-gray-800">Generating Batch...</p>
+            <p id="batchProgressText" class="text-gray-500 mt-2">Generating...</p>
+          </div>
+
+          <div id="batchResultsContainer" class="hidden mt-8 fade-in">
+            <div class="flex flex-col sm:flex-row justify-between items-center mb-6 gap-4">
+              <h3 id="batchResultsCount" class="text-xl font-bold text-gray-800">Batch Results (0)</h3>
+              <button id="batchDownloadBtn" class="w-full sm:w-auto flex items-center justify-center space-x-2 px-6 py-2.5 bg-green-600 text-white rounded-lg hover:bg-green-700 font-bold transition shadow-md hover:shadow-lg">
+                <span>Download All (DOCX)</span>
+              </button>
+            </div>
+            
+            <div id="batchResultsList" class="grid grid-cols-1 gap-8"></div>
+            
+            <div class="mt-10 flex justify-center">
+              <button id="startOverBtn" class="text-gray-500 hover:text-[#ff4500] font-medium underline underline-offset-4 transition-colors">Start Over</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Error Display -->
+    <div id="errorBox" class="hidden bg-red-50 text-red-700 p-4 rounded-lg border border-red-200 flex items-start gap-3 shadow-sm">
+      <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+      </svg>
+      <div>
+        <strong class="font-bold block">Error Encountered</strong>
+        <span id="errorMessageText" class="text-sm"></span>
+      </div>
+    </div>
+
+    <!-- Results Section (Single Manual) -->
+    <section id="singleResultContainer" class="hidden bg-white p-4 sm:p-8 rounded-xl shadow-lg border border-gray-100 fade-in">
+      <div class="flex flex-col sm:flex-row justify-between items-center mb-6 sm:mb-8 pb-4 border-b border-gray-100 gap-4">
+         <div class="flex items-center gap-4 w-full sm:w-auto">
+           <h2 class="text-xl sm:text-2xl font-bold text-gray-800">Generated Preview</h2>
+           <span id="singleResultBadge" class="px-3 py-1 text-xs font-bold uppercase tracking-wider rounded-full bg-blue-100 text-blue-700">Detected: unknown</span>
+         </div>
+         <button id="singleDownloadBtn" class="w-full sm:w-auto flex items-center justify-center space-x-2 px-6 py-2 border-2 border-gray-200 rounded-lg hover:border-[#ff4500] hover:text-[#ff4500] text-gray-600 font-bold transition-colors">
+           <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+           </svg>
+           <span>Download DOCX</span>
+         </button>
+      </div>
+
+      <div class="flex flex-col lg:flex-row gap-10">
+        <div class="w-full lg:w-5/12">
+          <div class="text-xs font-bold text-gray-500 uppercase tracking-wider mb-2">Illustration</div>
+          <div id="singleResultImgBox" class="w-full bg-white rounded-lg border-2 border-gray-100 shadow-inner flex items-center justify-center overflow-hidden relative aspect-square">
+            <img id="singleResultImg" src="" alt="Generated Sign" class="hidden w-full h-full object-contain p-2" />
+            <div id="singleResultImgLoader" class="flex flex-col items-center text-gray-300 animate-pulse">
+               <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 mb-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+               </svg>
+            </div>
+          </div>
+          <div id="singleResultDesc" class="mt-4 p-4 bg-gray-50 text-gray-600 text-sm rounded-lg border border-gray-200 italic"></div>
+        </div>
+
+        <div class="w-full lg:w-7/12">
+           <div class="text-xs font-bold text-gray-500 uppercase tracking-wider mb-2">Exam Content</div>
+           <div class="p-8 border border-gray-200 rounded-xl bg-gray-50/50 h-full flex flex-col justify-center">
+              <p id="singleResultQuestion" class="text-xl font-bold text-gray-900 mb-8 leading-snug"></p>
+              <div id="singleResultOptions" class="space-y-4"></div>
+           </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="bg-gray-800 text-gray-400 py-8 border-t border-gray-700 mt-auto">
+    <div class="container mx-auto px-4 text-center">
+       <p class="mb-2 font-medium text-gray-300">English Exam Content Generator</p>
+       <p class="text-sm">
+         &copy; <span id="currentYear"></span> All rights reserved. <a href="https://globalsuccessfiles.com" target="_blank" rel="noopener noreferrer" class="hover:text-white underline decoration-dotted underline-offset-2 transition-colors">Designed by GlobalSuccessFiles.Com</a>
+       </p>
+    </div>
+  </footer>
+
+  <script type="module" src="./app.js"></script>
+</body>
 </html>
