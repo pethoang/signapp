@@ -91,6 +91,14 @@ const apiKeyInput = document.getElementById('apiKeyInput');
 const errorBox = document.getElementById('errorBox');
 const errorMessageText = document.getElementById('errorMessageText');
 
+// Init API Key from LocalStorage
+window.addEventListener('DOMContentLoaded', () => {
+  const savedKey = localStorage.getItem('GEMINI_API_KEY');
+  if (savedKey) {
+    apiKeyInput.value = savedKey;
+  }
+});
+
 // Upload Tab Elements
 const fileInput = document.getElementById('fileInput');
 const referenceImagePreview = document.getElementById('referenceImagePreview');
@@ -130,11 +138,27 @@ function hideError() {
 }
 
 function getApiKey() {
-  const key = apiKeyInput.value.trim();
+  let key = apiKeyInput.value.trim();
+  
   if (!key) {
-    showError("Please enter a Gemini API Key in the header.");
-    throw new Error("Missing API Key");
+    key = localStorage.getItem('GEMINI_API_KEY') || "";
   }
+  
+  if (!key) {
+    key = prompt("Vui lòng nhập API Key Gemini của bạn để tiếp tục (Gemini API Key):");
+    if (key) {
+      key = key.trim();
+      apiKeyInput.value = key;
+    }
+  }
+
+  if (!key) {
+    showError("Please enter a Gemini API Key in the header or via the prompt.");
+    throw new Error("Missing API Key");
+  } else {
+    localStorage.setItem('GEMINI_API_KEY', key);
+  }
+  
   return key;
 }
 
